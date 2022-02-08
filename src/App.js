@@ -3,14 +3,18 @@ import data from "./data.json"
 //components
 import Products from './components/Products'
 import Filter from './components/Filter'
+import Cart from './components/Cart';
 //feature 1
 export default class App extends Component {
   constructor(){
     super()
     this.state= {
       products:data.products,
+      cartItems: [],
       size:"",
       sort:"",
+      display : true
+      
 
     }
   }
@@ -57,6 +61,36 @@ this.setState({
  console.log(this.state.products);
   }
 
+ //addItem
+  addItemToCart=(product)=>{
+    const cartItems = this.state.cartItems.slice();
+    let alreadyInCart= false;
+
+    cartItems.forEach((item)=>{
+      if(item._id === product._id) {
+        console.log(`item._id :${item._id} et product._id :${product._id}`);
+        item.count++;
+        alreadyInCart = true
+      }
+    })
+   
+    if(!alreadyInCart){
+      
+      cartItems.push({...product,count:1})
+    }
+    //console.log(cartItems.length);
+    //update state
+    this.setState({cartItems})
+    this.state.cartItems.length !== 0 && this.setState({display :false})
+  }
+
+  //removeItem
+  removeFormeCart=(item)=>{
+    const cartItems = this.state.cartItems.slice();
+    
+    this.setState({cartItems:cartItems.filter(x=>x._id !== item._id)})
+  }
+
   render() {
     return (
       <div className="grid-container">
@@ -76,10 +110,11 @@ this.setState({
             >
             </Filter>
          
-            <Products products={this.state.products}/>
+            <Products products={this.state.products} addItemToCart={this.addItemToCart} />
             </div>
-            <div className="sidebar">
-               Cart Items
+            <div className="sidebar" >
+               <Cart cartItems={this.state.cartItems} removeFormeCart={this.removeFormeCart} display={this.state.display}/>
+              
             </div>
           </div>
           
