@@ -20,4 +20,5 @@ const productItem = ({product,addItemToCart}) => {
   );
 };
 
+
 export default productItem;
