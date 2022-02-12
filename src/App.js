@@ -10,6 +10,7 @@ export default class App extends Component {
     super()
     this.state= {
       products:data.products,
+
       cartItems: localStorage.getItem("cartItems") ?
                  JSON.parse(localStorage.getItem("cartItems"))
                 : [],
@@ -20,10 +21,12 @@ export default class App extends Component {
 
     }
   }
+
   //updateOrder
   createOrder=(order)=>{
     alert("Need to save oreder for" + order.name)
   }
+
 
   //sort
   sortProducts=(event)=>{
@@ -91,12 +94,14 @@ this.setState({
     this.setState({cartItems})
     localStorage.setItem("cartItems", JSON.stringify(cartItems))
     //this.state.cartItems.length !== 0 && this.setState({display :false})
+    
   }
 
   //removeItem
   removeFormeCart=(item)=>{
     const cartItems = this.state.cartItems.slice();
     
+
     this.setState({
       cartItems:cartItems.filter(x=>x._id !== item._id)
     })
@@ -126,12 +131,14 @@ this.setState({
             <Products products={this.state.products} addItemToCart={this.addItemToCart} />
             </div>
             <div className="sidebar" >
+
                <Cart 
                cartItems={this.state.cartItems} 
                removeFormeCart={this.removeFormeCart} 
                display={this.state.display}
                createOrder={this.createOrder}
                />
+
               
             </div>
           </div>
@@ -143,4 +150,6 @@ this.setState({
 }
 
 
+
 }
+

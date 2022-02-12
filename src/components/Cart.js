@@ -1,3 +1,4 @@
+
 import React,{Component} from "react";
 import formatCurrency from "../util";
 
@@ -38,6 +39,7 @@ constructor(props){
   render(){
       const {cartItems} = this.props
       console.log(this.state.checkout);
+
   return (
     <>
       <div>
@@ -65,7 +67,9 @@ constructor(props){
                     {formatCurrency(item.price)}x{item.count} {""}
                     <button
                       className="button"
+
                       onClick={() => this.props.removeFormeCart(item)}
+
                     >
                       Remove
                     </button>
@@ -78,7 +82,9 @@ constructor(props){
       </div>
       <div className="cart">
       {cartItems.length !== 0 &&
+
       <div>
+
         <div className="total">
         
           <div>
@@ -88,6 +94,7 @@ constructor(props){
               cartItems.reduce((a, c) => a + c.price * c.count, 0)
             )}
           </div>
+
           
          
               <button className="button primary" 
