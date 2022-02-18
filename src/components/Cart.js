@@ -2,6 +2,9 @@ import React,{useState} from "react";
 import formatCurrency from "../util";
 import {Fade} from "react-reveal"
 
+
+
+
 const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
   const [showCheckOut, setShowCheckOut] = useState(false);
   //const [name, setName] = useState("");
@@ -33,7 +36,7 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
     createOrder(order)
   }
 
-  console.log(cartItems.length);
+
   return (
     <>
       <div>
@@ -92,6 +95,7 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
         </div>
       }
       </div>
+
       {showCheckOut && 
       <Fade right cascade>
       <div className="cart">
@@ -132,7 +136,9 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
                       </ul>
                     </form>
                   </div>
+
                   </Fade>
+
         }
     </>
   );
