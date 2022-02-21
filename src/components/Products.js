@@ -24,7 +24,9 @@ class Products extends Component {
 
   componentDidMount(){
     this.props.fetchProducts()
-    console.log(this.props.products);
+
+    //console.log(this.props.products);
+
   }
 
 openModal=(product)=>{
@@ -120,4 +122,6 @@ closeModal=()=>{
 
 export default connect((state)=>({ products:state.products.filteredItems}), {
   fetchProducts,
+
 })(Products);
+
