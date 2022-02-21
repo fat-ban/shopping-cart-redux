@@ -4,6 +4,10 @@ import data from "./data.json";
 import Products from "./components/Products";
 import Filter from "./components/Filter";
 import Cart from "./components/Cart";
+//PROVIDER
+import { Provider } from "react-redux";
+import store from "./store";
+
 //feature 1
 export default class App extends Component {
   constructor() {
@@ -18,55 +22,11 @@ export default class App extends Component {
       display: true,
     };
   }
+  
 
-  //sort
-  sortProducts = (event) => {
-    //impl
-    const sort = event.target.value;
-    console.log(event.target.value);
-
-    this.setState({
-      sort: sort,
-      //slice create cory of state
-      products: this.state.products
-        .slice()
-        .sort((a, b) =>
-          sort === "lowest"
-            ? a.price > b.price
-              ? 1
-              : -1
-            : sort === "highest"
-            ? a.price < b.price
-              ? 1
-              : -1
-            : a._id < b._id
-            ? 1
-            : -1
-        ),
-    });
-  };
-
-  //filter
-  filterProducts = (event) => {
-    //imp
-
-    if (event.target.value === "") {
-      this.setState({
-        size: event.target.value,
-        products: data.products,
-      });
-    } else {
-      this.setState({
-        size: event.target.value,
-        products: data.products.filter(
-          (product) => product.availableSizes.indexOf(event.target.value) >= 0
-        ),
-      });
-    }
-
-    console.log(this.state.products);
-  };
-
+  //sort in redux
+  //filter in redux
+  
   //addItem
   addItemToCart = (product) => {
     const cartItems = this.state.cartItems.slice();
@@ -106,6 +66,7 @@ export default class App extends Component {
 
   render() {
     return (
+      <Provider store={store}>
       <div className="grid-container">
         <header>
           <a href="/"> React Shopping Cart</a>
@@ -113,18 +74,9 @@ export default class App extends Component {
         <main>
           <div className="content">
             <div className="main">
-              <Filter
-                count={this.state.products.length}
-                size={this.state.size}
-                sort={this.state.sort}
-                filterProducts={this.filterProducts}
-                sortProducts={this.sortProducts}
-              ></Filter>
+              <Filter/>
 
-              <Products
-                products={this.state.products}
-                addItemToCart={this.addItemToCart}
-              />
+              <Products addItemToCart={this.addItemToCart}/>
             </div>
             <div className="sidebar">
               <Cart
@@ -137,6 +89,7 @@ export default class App extends Component {
         </main>
         <footer>All right is reserved</footer>
       </div>
+      </Provider>
     );
   }
 }
