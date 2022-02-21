@@ -22,6 +22,7 @@ export default class App extends Component {
       display: true,
     };
   }
+  
 
   //sort in redux
   //filter in redux

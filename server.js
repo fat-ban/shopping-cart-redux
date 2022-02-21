@@ -48,7 +48,7 @@ app.get("/api/products", async (req, res) => {
         const savedProduct = await newProduct.save();
         res.send(savedProduct);
       } catch(error){
-       console.log(error)
+       console.log(error.message)
       }
     
   });
