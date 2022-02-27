@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import data from "./data.json";
+//import data from "./data.json";
 //components
 import Products from "./components/Products";
 import Filter from "./components/Filter";
@@ -10,7 +10,7 @@ import store from "./store";
 
 //feature 1
 export default class App extends Component {
-  constructor() {
+ /* constructor() {
     super();
     this.state = {
       products: data.products,
@@ -21,13 +21,13 @@ export default class App extends Component {
       sort: "",
       display: true,
     };
-  }
+  }*/
 
   //sort in redux
   //filter in redux
   
   //addItem
-  addItemToCart = (product) => {
+  /*addItemToCart = (product) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart = false;
 
@@ -46,10 +46,10 @@ export default class App extends Component {
     //update state
     this.setState({ cartItems });
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  };
+  };*/
 
   //removeItem
-  removeFormeCart = (item) => {
+ /* removeFormeCart = (item) => {
     const cartItems = this.state.cartItems.slice();
 
     this.setState({ cartItems: cartItems.filter((x) => x._id !== item._id) });
@@ -57,11 +57,11 @@ export default class App extends Component {
       "cartItems",
       JSON.stringify(cartItems.filter((x) => x._id !== item._id))
     );
-  };
+  };*/
 
-  createOrder = (order) => {
+ /* createOrder = (order) => {
     alert("Need to save order for " + order.name)
-  };
+  };*/
 
   render() {
     return (
@@ -79,9 +79,9 @@ export default class App extends Component {
             </div>
             <div className="sidebar">
               <Cart
-                cartItems={this.state.cartItems}
-                removeFormeCart={this.removeFormeCart}
-                createOrder={this.createOrder}
+                //cartItems={this.state.cartItems}
+                //removeFormeCart={this.removeFormeCart}
+                //createOrder={this.createOrder}
               />
             </div>
           </div>

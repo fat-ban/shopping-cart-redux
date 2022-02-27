@@ -9,7 +9,8 @@ import formatCurrency from "../util"
 import { fetchProducts } from "../actions/productActions";
 //connect from redux
 import { connect } from "react-redux";
-
+//addItemToCart
+import {addToCart} from "../actions/cartActions"
 
 //import ProductItem from './productItem'
 
@@ -24,7 +25,7 @@ class Products extends Component {
 
   componentDidMount(){
     this.props.fetchProducts()
-    //console.log(this.props.products);
+    console.log(this.props.products);
   }
 
 openModal=(product)=>{
@@ -51,7 +52,7 @@ closeModal=()=>{
                  </a>
                  <div className="product-price">
                    <div>{formatCurrency(product.price)}</div>
-                   <button className="button primary" onClick={()=>{this.props.addItemToCart(product)}}>
+                   <button className="button primary" onClick={()=>{this.props.addToCart(product)}}>
                      Add To Cart
                    </button>
                  </div>
@@ -97,7 +98,7 @@ closeModal=()=>{
                     <div className="product-price">
                       <div>{formatCurrency(this.state.product.price)}</div>
                       <button className="button primary" onClick={()=>
-                        {this.props.addItemToCart(this.state.product);
+                        {this.props.addToCart(this.state.product);
                         this.closeModal()}
                         }
                         >Add To Cart</button>
@@ -120,4 +121,5 @@ closeModal=()=>{
 
 export default connect((state)=>({ products:state.products.filteredItems}), {
   fetchProducts,
+  addToCart
 })(Products);
