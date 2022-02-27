@@ -1,48 +1,58 @@
-import React,{useState} from "react";
+import React, { Component } from 'react'
 import formatCurrency from "../util";
 import {Fade} from "react-reveal"
+//
+import { connect } from 'react-redux';
+//
 
-const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
-  const [showCheckOut, setShowCheckOut] = useState(false);
-  //const [name, setName] = useState("");
-  //const [email, setEmail] = useState("");
-  //const [address, setAddress] = useState("");
+import {removeFromCart} from '../actions/cartActions'
 
-  const [state, setState] = useState({
-    name:"",
+
+ class Cart extends Component {
+  constructor(props){
+    super(props);
+    
+    this.state={
+      name:"",
     email:"",
-    address:""
-  });
-
-
-  const handleInput=(e)=>{
-   setState({[e.target.name]:e.target.value})
-  }
-
-  //onSubmit
-
-  const handleSubmitCreateOrder=(e)=>{
-    e.preventDefault()
-    const order={
-      name : state.name,
-      email:state.email,
-      address:state.address,
-      cartItems:cartItems,
-
+    address:"",
+    showCheckOut:false,
     }
-    createOrder(order)
   }
 
-  console.log(cartItems.length);
-  return (
-    <>
+  handleInput=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+   }
+ 
+   //onSubmit
+ 
+   handleSubmitCreateOrder=(e)=>{
+     e.preventDefault()
+     const order={
+       name :this.state.name,
+       email:this.state.email,
+       address:this.state.address,
+       cartItems:this.props.cartItems,
+ 
+     }
+  
+     this.props.createOrder(order)
+   }
+
+  // handleRemoveFromeCart=(item)=>{
+    // this.props.removeFromCart(item)
+  //}
+ 
+  render() {
+    return (
+      <>
       <div>
-        {cartItems.length === 0 ? (
+        {this.props.cartItems.length === 0 ? (
           <div className="cart cart-header">cart is empty</div>
 
         ) : (
           <div className="cart cart-header">
-            You have {cartItems.length} in the cart {"."}
+            You have {this.props.cartItems.length} in the cart {"."}
           </div>
         )}
       </div>
@@ -50,7 +60,7 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
       <div className="cart">
         <Fade left cascade>
         <ul className="cart-items">
-          {cartItems.map((item) => (
+          {this.props.cartItems.map((item) => (
             <li key={item._id}>
               <div className="display-item">
                 <div>
@@ -62,7 +72,14 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
                     {formatCurrency(item.price)}x{item.count} {""}
                     <button
                       className="button"
-                      onClick={() => removeFormeCart(item)}
+                      onClick={//() =>{ this.props.removeFromCart(item)}
+                      //console.log("click remove")
+                      //()=>{this.props.removeFromCart(item)}
+                     
+                      ()=>{console.log(item)
+                         this.props.removeFromCart(item)
+                      }
+                      }
                     >
                       Remove
                     </button>
@@ -75,27 +92,27 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
         </Fade>
       </div>
       <div className="cart">
-      {cartItems.length !== 0 &&
-        <div className="total">
+      {this.props.cartItems.length !== 0 &&
+        (<div className="total">
         
           <div>
            
             Total :{" "}
             {formatCurrency(
-              cartItems.reduce((a, c) => a + c.price * c.count, 0)
+              this.props.cartItems.reduce((a, c) => a + c.price * c.count, 0)
             )}
           </div>
          
-              <button className="button primary" onClick={()=>setShowCheckOut(true)}>Proceed</button>
+              <button className="button primary" onClick={()=>this.setState({showCheckOut:true})}>Proceed</button>
           
           
-        </div>
+        </div>)
       }
       </div>
-      {showCheckOut && 
+      {this.state.showCheckOut && 
       <Fade right cascade>
       <div className="cart">
-                    <form onSubmit={handleSubmitCreateOrder}>
+                    <form onSubmit={this.handleSubmitCreateOrder}>
                       <ul className="form-container">
                         <li>
                           <label>Email</label>
@@ -103,7 +120,7 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
                             name="email"
                             type="email"
                             required
-                            onChange={handleInput}
+                            onChange={this.handleInput}
                           ></input>
                         </li>
                         <li>
@@ -112,7 +129,7 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
                             name="name"
                             type="text"
                             required
-                            onChange={handleInput}
+                            onChange={this.handleInput}
                           ></input>
                         </li>
                         <li>
@@ -121,7 +138,7 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
                             name="address"
                             type="text"
                             required
-                            onChange={handleInput}
+                            onChange={this.handleInput}
                           ></input>
                         </li>
                         <li>
@@ -135,7 +152,14 @@ const Cart = ({ cartItems, removeFormeCart,createOrder}) => {
                   </Fade>
         }
     </>
-  );
-};
+    )
+  }
+}
 
-export default Cart;
+
+export default connect(
+  ((state)=>({
+  cartItems:state.cart.cartItems,
+})),
+{removeFromCart}
+) (Cart);
