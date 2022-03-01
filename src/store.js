@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose,combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { cartReducers } from "./reducers/cartReducers";
+import { orderReducer } from "./reducers/orderReducers";
 import { productsReducer } from "./reducers/productReducers";
 
 
@@ -11,6 +12,7 @@ const store = createStore(
     combineReducers({
         products:productsReducer,
         cart:cartReducers,
+        order:orderReducer,
     }),
     initialState,
     composeEnhancer(applyMiddleware(thunk))
